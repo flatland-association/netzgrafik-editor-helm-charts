@@ -19,3 +19,6 @@ localdb/db_pw
 **/*.drawio
 **/*.lock
 **/secret-values*.yaml
+**/values-prod.yaml
+**/values-int.yaml
+**/*.pem

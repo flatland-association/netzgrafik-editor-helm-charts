@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: application-config
+  labels:
+    {{- include "netzgrafik-editor-backend.labels" . | nindent 4 }}
+    # edit to force update of configmap after editing the file:
+    v: "1"
+data:
+  application.yml: |
+   {{ .Files.Get "configs/application.yaml" | nindent 4 }}

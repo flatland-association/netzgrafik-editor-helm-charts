@@ -1,0 +1,101 @@
+netzgrafik-editor-backend:
+  extraEnv:
+    - name: NETZGRAFIKEDITOR_URL
+      value: https://nge-int.flatland.cloud
+    - name: NETZGRAFIKEDITOR_KEYCLOAK_URL
+      value: https://keycloak.flatland.cloud/realms/netzgrafikeditor
+    - name: NETZGRAFIKEDITOR_DB_URL
+      valueFrom:
+        secretKeyRef:
+          name: netzgrafikeditor-db-auth
+          key: NETZGRAFIKEDITOR_DB_URL
+    - name: NETZGRAFIKEDITOR_DB_USER
+      valueFrom:
+        secretKeyRef:
+          name: netzgrafikeditor-db-auth
+          key: NETZGRAFIKEDITOR_DB_USER
+    - name: NETZGRAFIKEDITOR_DB_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: netzgrafikeditor-db-auth
+          key: NETZGRAFIKEDITOR_DB_PASSWORD
+
+  replicaCount: 1
+  ingress:
+    enabled: true
+    className: "cce"
+    annotations:
+      kubernetes.io/elb.class: performance
+      kubernetes.io/elb.id: ffcba2cc-2aba-4862-8a33-8dc23f6e15e1
+      kubernetes.io/elb.port: '443'
+    hosts:
+      - host: nge-api-int.flatland.cloud
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: nge-netzgrafik-editor-backend
+            property:
+              ingress.beta.kubernetes.io/url-match-mode: STARTS_WITH
+    tls:
+      - secretName: tls
+        hosts:
+          - nge-api-int.flatland.cloud
+
+netzgrafik-editor-frontend:
+  BACKEND_URL: https://nge-api-int.flatland.cloud
+  KEYCLOAK_URL: https://keycloak.flatland.cloud/realms/netzgrafikeditor
+  PRODUCTION: "true"
+  LABEL: integration
+  # Additional volumes on the output Deployment definition.
+  volumes:
+    - configMap:
+        name: frontend-additional-entrypoint
+        # https://etoews.github.io/blog/2017/07/29/inject-an-executable-script-into-a-container-in-kubernetes/
+        defaultMode: 0777
+      name: frontend-additional-entrypoint
+    - configMap:
+        name: flatland-cloud-header
+        # https://etoews.github.io/blog/2017/07/29/inject-an-executable-script-into-a-container-in-kubernetes/
+        defaultMode: 0777
+      name: flatland-cloud-header
+    - configMap:
+        name: flatland-cloud-footer
+        # https://etoews.github.io/blog/2017/07/29/inject-an-executable-script-into-a-container-in-kubernetes/
+        defaultMode: 0777
+      name: flatland-cloud-footer
+
+  # Additional volumeMounts on the output Deployment definition.
+  volumeMounts:
+    - name: frontend-additional-entrypoint
+      mountPath: /docker-entrypoint.d/frontend-additional-entrypoint.sh
+      subPath: frontend-additional-entrypoint.sh
+    - name: flatland-cloud-header
+      mountPath: /docker-entrypoint.d/header.txt
+      subPath: header.txt
+    - name: flatland-cloud-footer
+      mountPath: /docker-entrypoint.d/footer.txt
+      subPath: footer.txt
+  replicaCount: 1
+  ingress:
+    enabled: true
+    className: "cce"
+    annotations:
+      kubernetes.io/elb.class: performance
+      kubernetes.io/elb.id: ffcba2cc-2aba-4862-8a33-8dc23f6e15e1
+      kubernetes.io/elb.port: '443'
+    hosts:
+      - host: nge-int.flatland.cloud
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: nge-netzgrafikeditor-frontend
+            property:
+              ingress.beta.kubernetes.io/url-match-mode: STARTS_WITH
+    tls:
+      - secretName: tls
+        hosts:
+          - nge-int.flatland.cloud
