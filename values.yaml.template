@@ -1,9 +1,9 @@
 netzgrafik-editor-backend:
   extraEnv:
     - name: NETZGRAFIKEDITOR_URL
-      value: https://nge-int.flatland.cloud
+      value: # FILL IN e.g. https://nge-int.flatland.cloud
     - name: NETZGRAFIKEDITOR_KEYCLOAK_URL
-      value: https://keycloak.flatland.cloud/realms/netzgrafikeditor
+      value: # FILL IN e.g. https://keycloak.flatland.cloud/realms/netzgrafikeditor
     - name: NETZGRAFIKEDITOR_DB_URL
       valueFrom:
         secretKeyRef:
@@ -48,35 +48,6 @@ netzgrafik-editor-frontend:
   KEYCLOAK_URL: https://keycloak.flatland.cloud/realms/netzgrafikeditor
   PRODUCTION: "true"
   LABEL: integration
-  # Additional volumes on the output Deployment definition.
-  volumes:
-    - configMap:
-        name: frontend-additional-entrypoint
-        # https://etoews.github.io/blog/2017/07/29/inject-an-executable-script-into-a-container-in-kubernetes/
-        defaultMode: 0777
-      name: frontend-additional-entrypoint
-    - configMap:
-        name: flatland-cloud-header
-        # https://etoews.github.io/blog/2017/07/29/inject-an-executable-script-into-a-container-in-kubernetes/
-        defaultMode: 0777
-      name: flatland-cloud-header
-    - configMap:
-        name: flatland-cloud-footer
-        # https://etoews.github.io/blog/2017/07/29/inject-an-executable-script-into-a-container-in-kubernetes/
-        defaultMode: 0777
-      name: flatland-cloud-footer
-
-  # Additional volumeMounts on the output Deployment definition.
-  volumeMounts:
-    - name: frontend-additional-entrypoint
-      mountPath: /docker-entrypoint.d/frontend-additional-entrypoint.sh
-      subPath: frontend-additional-entrypoint.sh
-    - name: flatland-cloud-header
-      mountPath: /docker-entrypoint.d/header.txt
-      subPath: header.txt
-    - name: flatland-cloud-footer
-      mountPath: /docker-entrypoint.d/footer.txt
-      subPath: footer.txt
   replicaCount: 1
   ingress:
     enabled: true
