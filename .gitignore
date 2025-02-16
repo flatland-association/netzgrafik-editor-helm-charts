@@ -22,3 +22,4 @@ localdb/db_pw
 **/values-prod.yaml
 **/values-int.yaml
 **/*.pem
+**/.sops.yaml
