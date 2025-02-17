@@ -43,3 +43,8 @@ helm upgrade nge -f values.yaml -f secret-values.yaml .
 > A container using a ConfigMap as a subPath volume mount will not receive ConfigMap updates.
 > https://kubernetes.io/docs/concepts/storage/volumes/#secret
 
+### Preview k8s definitions
+
+```
+helm template -f values.yaml -f secret-values.yaml .  
+```

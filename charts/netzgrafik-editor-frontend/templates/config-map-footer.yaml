@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: flatland-cloud-footer
+  labels:
+    {{- include "netzgrafik-editor-frontend.labels" . | nindent 4 }}
+    # edit to force update of configmap after editing the file:
+    v: "4"
+data:
+  footer.txt: |
+   {{ .Files.Get "configs/footer.txt" | nindent 4  }}

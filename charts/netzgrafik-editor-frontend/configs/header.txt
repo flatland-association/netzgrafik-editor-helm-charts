@@ -1,0 +1,106 @@
+<!-- flatland.cloud styles -->
+<style>
+    .flatland-ui ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+    .flatland-ui ul li {
+      padding: 0;
+      margin: 0;
+    }
+    .flatland-ui a {
+      text-decoration: none;
+      color: inherit;
+    }
+    .flatland-ui a:hover, .flatland-ui a:active  {
+      text-decoration: underline;
+      color: inherit;
+    }
+    .flatland-ui a:visited {
+      color: inherit;
+    }
+    .flatland-ui * {
+      font-family: "Helvetica Neue", "Arial", sans-serif;
+      box-sizing: border-box;
+      line-height: 1.3;
+    }
+
+    .flatland-header {
+      position: sticky;
+      top: 0;
+      height: 40px;
+      background: linear-gradient(45deg, rgb(109, 125, 134), rgb(58, 74, 83));
+      font-size: 14px;
+      color: white;
+    }
+    .flatland-header-content {
+      background-image: url("https://flatland.cloud/ui/flatland-bkgnd.svg");
+      background-position: center top;
+      background-size: cover;
+      padding: 8px 16px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .flatland-footer {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      left:0;
+      right:0;
+      bottom:0;
+      height: 68px;
+      background-color: rgb(29, 37, 42);
+    }
+    .flatland-footer-content {
+      padding: 2px 16px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: minmax(auto, 164px) minmax(104px, 1fr) minmax(auto, 164px);
+      gap: 16px;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .flatland-footer-content address {
+        font-style: normal;
+    }
+    .flatland-footer-content * {
+      font-size: 11px;
+      font-weight: 300;
+      color: white;
+    }
+    @media (max-width: 768px) {
+      .flatland-footer-content * {
+        font-size: 10px;
+      }
+    }
+</style>
+
+<!-- flatland.cloud header -->
+<div class="flatland-ui flatland-header">
+    <div class="flatland-header-content">
+        <a href="https://flatland.cloud" target="_blank" style="font-size: 20px; text-transform: uppercase">
+            <span style="font-weight: 700">Flat</span><span style="font-weight: 300">land</span>
+        </a>
+    </div>
+</div>
+
+<!-- nge patches with fixed header height 40px and fixed footer height 68px-->
+<style>
+    .sbb-header-lean.sbb-header-lean {margin-top: 40px;}
+    sbb-navigation-bar > div {margin-top: 40px;}
+    sbb-icon-sidebar-container {margin-top: 40px; margin-bottom: 68px;}
+    #cd-layout-content {height: 100% !important;}
+    #cd-layout-aside, #cd-layout-aside > div[aside], #cd-layout-aside sbb-perlenkette > div {height: 100% !important;}
+    #cd-layout-aside .svg-container, #cd-layout-aside .svg-container > svg {height: calc(100% - 34px);}
+    #main-drawing-container-root {height: calc(100% - 34px) !important;}
+    .sbb-header-lean-side-menu-container {top: 40px; bottom: 68px; height: auto;}
+    #cd-layout-aside > div[aside]:has(sbb-perlenkette) {widht: 480px !important;}
+    #cd-layout-aside > div[aside]:has(sbb-perlenkette) {overflow: hidden !important;}
+</style>
+
+<!-- nge -->
