@@ -16,7 +16,23 @@ For local dev setup, please refer to:
 * [netzgrafik-editor-frontend](https://github.com/SchweizerischeBundesbahnen/netzgrafik-editor-frontend)
 * [netzgrafik-editor-backend](https://github.com/SchweizerischeBundesbahnen/netzgrafik-editor-backend)
 
-### TL;DR;
+## Architecture
+
+The following diagram shows the network wiring of the different components:
+
+![Network Wiring](images/k8s_network.drawio.png)
+
+The following diagram shows the k8s resources deployed by the Helm charts and how they refer to each other:
+
+![helm_deployment.png](images/helm_deployment.drawio.png)
+
+## Prerequisites
+
+* k8s cluster
+* DB service running (we use a cloud service)
+* Keycloak running (we use a separate Helm deployment)
+
+## TL;DR;
 
 1. Edit config to your needs:
 
