@@ -25,6 +25,6 @@ appVersion: "1.16.1"
 
 dependencies:
   - name: netzgrafik-editor-backend
-    version: 0.1.0
+    version: 2.7.2
   - name: netzgrafik-editor-frontend
-    version: 0.1.0
+    version: 2.9.23
