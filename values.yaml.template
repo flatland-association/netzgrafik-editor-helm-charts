@@ -136,7 +136,7 @@ netzgrafik-editor-backend:
 
 netzgrafik-editor-frontend:
   BACKEND_URL: https://nge-api-int.flatland.cloud
-  KEYCLOAK_URL: https://keycloak.flatland.cloud/realms/netzgrafikeditor
+  KEYCLOAK_URL: https://keycloak.flatland.cloud/realms/flatland
   PRODUCTION: "true"
   LABEL: integration
   replicaCount: 1

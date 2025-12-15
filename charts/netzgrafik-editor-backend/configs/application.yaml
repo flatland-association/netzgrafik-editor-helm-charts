@@ -31,4 +31,4 @@ logging:
 
 auth:
   audience:
-    service-name: netzgrafikeditor
+    service-name: flatland
