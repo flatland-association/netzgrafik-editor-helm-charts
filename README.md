@@ -43,13 +43,20 @@ vi values.yaml
 vi secret-values.yaml
 ```
 
-2. Install Helm Release in default namespace:
+2. Install TLS secret:
+
+```bash
+namespace=nge
+kubectl --context external create -n ${namespace} secret tls tls  --cert=tls.crt  --key=tls.key --save-config -o yaml --dry-run=client | kubectl --context external -n ${namespace} apply -f -
+```
+
+3. Install Helm Release in default namespace:
 
 ```shell
 helm install nge -f values.yaml -f secret-values.yaml .
 ```
 
-3. Update Release in default namespace:
+4. Update Release in default namespace:
 
 ```shell
 helm upgrade nge -f values.yaml -f secret-values.yaml .
