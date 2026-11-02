@@ -37,8 +37,6 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: [ "/bin/bash" ]
-          args: [ "-c", "/layers/paketo-buildpacks_bellsoft-liberica/jre/bin/keytool -trustcacerts -keystore /layers/paketo-buildpacks_bellsoft-liberica/jre/lib/security/cacerts -storepass changeit -noprompt -importcert -file /tmp/chain.pem && /cnb/process/web" ]
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}

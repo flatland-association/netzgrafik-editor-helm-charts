@@ -7,13 +7,22 @@
 # N.B. /usr/share/nginx/html/ owned by root and not nginx, sed -i fails see https://stackoverflow.com/questions/54460445/sed-permission-denied-on-temporary-file
 cd /usr/share/nginx/html/
 ls -al
-FILE_NAME=`ls main.*.js`
+# webpack (<= 2.9.x): main.<hash>.js, esbuild (>= 2.11.x): main-<HASH>.js
+FILE_NAME=$(ls main[.-]*.js)
 echo "FILE_NAME=${FILE_NAME}"
+if [ ! -f "${FILE_NAME}" ]; then
+  echo "ERROR: main bundle not found in /usr/share/nginx/html/" >&2
+  exit 1
+fi
 
 cp ${FILE_NAME} /tmp/${FILE_NAME}
 sed -i 's|backendUrl: "http://localhost:8080",|backendUrl: "BACKEND_URL",|g' /tmp/${FILE_NAME}
 
 sed -i 's|issuer: "http://localhost:8081/realms/netzgrafikeditor",|issuer: "KEYCLOAK_URL",|g' /tmp/${FILE_NAME}
+if grep -q 'localhost:8081/realms/netzgrafikeditor' /tmp/${FILE_NAME}; then
+  echo "ERROR: Keycloak issuer not replaced in ${FILE_NAME}, pattern changed?" >&2
+  exit 1
+fi
 
 sed -i 's|production: false,|production: PRODUCTION,|g' /tmp/${FILE_NAME}
 

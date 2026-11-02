@@ -101,4 +101,7 @@ tolerations: [ ]
 affinity: { }
 
 applicationYaml: configs/application.yaml
-
+  
+extraEnv:
+  - name: JAVA_TOOL_OPTIONS
+    value: "-Djavax.net.ssl.trustStore=/tmp/chain.pem -Djavax.net.ssl.trustStorePassword=changeit"
